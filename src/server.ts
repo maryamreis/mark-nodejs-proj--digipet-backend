@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { getDigipet } from "./digipet/model";
-import { hatchDigipet, walkDigipet } from "./digipet/controller";
+import { hatchDigipet, walkDigipet, trainDigipet, feedDigipet } from "./digipet/controller";
 
 const app = express();
 
@@ -71,5 +71,50 @@ app.get("/digipet/walk", (req, res) => {
     });
   }
 });
+
+app.get("/digipet/train", (req, res) => {
+  if (getDigipet()) {
+    trainDigipet();
+    res.json({
+      message: "You trained your digipet. It has more discipline now!",
+      digipet: getDigipet(),
+    });
+  } else {
+    res.json({
+      message:
+        "You don't have a digipet to walk! Try hatching one with /digipet/hatch",
+    });
+  }
+});
+
+app.get("/digipet/feed", (req, res) => {
+  if (getDigipet()) {
+    feedDigipet();
+    res.json({
+      message: "You fed your digipet. It has more nutrition now!",
+      digipet: getDigipet(),
+    });
+  } else {
+    res.json({
+      message:
+        "You don't have a digipet to walk! Try hatching one with /digipet/hatch",
+    });
+  }
+});
+
+// app.get("/digipet/ignore", (req, res) => {
+//   if (getDigipet()) {
+//     ignoreDigipet();
+//     res.json({
+//       message: "You fed your digipet. It has more nutrition now!",
+//       digipet: getDigipet(),
+//     });
+//   } else {
+//     res.json({
+//       message:
+//         "You don't have a digipet to walk! Try hatching one with /digipet/hatch",
+//     });
+//   }
+// });
 
 export default app;
