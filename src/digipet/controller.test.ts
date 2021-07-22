@@ -3,7 +3,8 @@ import {
   hatchDigipet,
   trainDigipet,
   walkDigipet,
-  ignoreDigipet
+  ignoreDigipet,
+  rehomeDigipet
 } from "./controller";
 import { getDigipet, INITIAL_DIGIPET, setDigipet } from "./model";
 
@@ -68,6 +69,10 @@ describe("hatchDigipet", () => {
     expect(() => hatchDigipet()).toThrowError();
   });
 });
+
+
+
+
 
 describe("trainDigipet", () => {
   it("increases digipet discipline by 10 and decreases happiness by 5", () => {
@@ -167,3 +172,18 @@ describe("ignoreDigipet", () => {
     });
   });
 });
+
+describe("rehomeDigipet", () => {
+  it("sets digipet to undefined", () => {
+    // setup
+    setDigipet(INITIAL_DIGIPET);
+    expect(getDigipet()).toStrictEqual(INITIAL_DIGIPET);
+
+    // act
+    rehomeDigipet();
+
+    // assert
+    expect(getDigipet()).toBeNull()
+    });
+  });
+
