@@ -3,6 +3,7 @@ import {
   hatchDigipet,
   trainDigipet,
   walkDigipet,
+  ignoreDigipet
 } from "./controller";
 import { getDigipet, INITIAL_DIGIPET, setDigipet } from "./model";
 
@@ -149,42 +150,20 @@ describe("walkDigipet", () => {
 });
 
 
-describe.skip("ignoreDigipet", () => {
-  it("increases digipet happiness by 10 and decreases nutrition by 5 (to represent need for sustenance)", () => {
+describe("ignoreDigipet", () => {
+  it("decreases all stats by 10", () => {
     // setup
     setDigipet(INITIAL_DIGIPET);
     expect(getDigipet()).toStrictEqual(INITIAL_DIGIPET);
 
     // act
-    walkDigipet();
+    ignoreDigipet();
 
     // assert
     expect(getDigipet()).toStrictEqual({
-      happiness: INITIAL_DIGIPET.happiness + 10,
-      nutrition: INITIAL_DIGIPET.nutrition - 5,
-      discipline: INITIAL_DIGIPET.discipline,
+      happiness: INITIAL_DIGIPET.happiness - 10,
+      nutrition: INITIAL_DIGIPET.nutrition - 10,
+      discipline: INITIAL_DIGIPET.discipline -10,
     });
-  });
-
-  it("cannot increase happiness past 100", () => {
-    // setup
-    setDigipet({ happiness: 95, nutrition: 50, discipline: 50 });
-
-    // act
-    walkDigipet();
-
-    // assert
-    expect(getDigipet()).toHaveProperty("happiness", 100);
-  });
-
-  it("cannot decrease nutrition below 0", () => {
-    // setup
-    setDigipet({ happiness: 50, nutrition: 0, discipline: 50 });
-
-    // act
-    walkDigipet();
-
-    // assert
-    expect(getDigipet()).toHaveProperty("nutrition", 0);
   });
 });
